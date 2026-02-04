@@ -12,3 +12,19 @@ dizionario2.Add("chiave1",1);
 dizionario2.Add("chiave2",2);
 dizionario2.Add("chiave3",3);
 Console.WriteLine($"Valore due del dizionario: {dizionario2["chiave2"]}");//stampa il valore con chiave 2
+
+Console.Write("Inserisci il tuo nome: ");
+string nome1=Console.ReadLine();
+Console.Write("Inserisci il tuo nome: ");
+string nome2=Console.ReadLine();
+Console.Write("Inserisci il tuo nome: ");
+string nome3=Console.ReadLine();
+Dictionary<string,string> dizionario3=new Dictionary<string,string>();
+dizionario3.Add("Nome1",nome1);
+dizionario3.Add("Nome2",nome2);
+dizionario3.Add("Nome3",nome3);
+
+Console.WriteLine($"Nome1: {dizionario3["Nome1"]}, Nome2: {dizionario3["Nome2"]}, Nome3: {dizionario3["Nome3"]}");
+Console.WriteLine("Quale nome vuoi stampare?");
+string nomeDaStampare=Console.ReadLine();
+Console.WriteLine($"nome scelto: {dizionario3[nomeDaStampare]}");
