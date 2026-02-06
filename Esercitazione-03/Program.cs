@@ -19,12 +19,12 @@ Console.Write("Inserisci il tuo nome: ");
 string nome2=Console.ReadLine();
 Console.Write("Inserisci il tuo nome: ");
 string nome3=Console.ReadLine();
-Dictionary<string,string> dizionario3=new Dictionary<string,string>();
-dizionario3.Add("Nome1",nome1);
-dizionario3.Add("Nome2",nome2);
-dizionario3.Add("Nome3",nome3);
+Dictionary<int,string> dizionario3=new Dictionary<int,string>();
+dizionario3.Add(1,nome1);
+dizionario3.Add(2,nome2);
+dizionario3.Add(3,nome3);
 
-Console.WriteLine($"Nome1: {dizionario3["Nome1"]}, Nome2: {dizionario3["Nome2"]}, Nome3: {dizionario3["Nome3"]}");
+Console.WriteLine($"Nome1: {dizionario3[1]}, Nome2: {dizionario3[2]}, Nome3: {dizionario3[3]}");
 Console.WriteLine("Quale nome vuoi stampare?");
-string nomeDaStampare=Console.ReadLine();
+int nomeDaStampare=int.Parse(Console.ReadLine());
 Console.WriteLine($"nome scelto: {dizionario3[nomeDaStampare]}");
