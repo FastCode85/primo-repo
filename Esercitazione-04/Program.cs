@@ -1,4 +1,6 @@
-﻿Console.WriteLine("Inserisci un numero intero");
+﻿using System.Globalization;
+
+Console.WriteLine("Inserisci un numero intero");
 string input=Console.ReadLine();
 int numero=int.Parse(input);
 Console.WriteLine($"Il numero inserito e' {numero}");
@@ -43,7 +45,38 @@ double num2;
 Console.WriteLine("Inserisci il secondo numero");
 num2=int.Parse(Console.ReadLine());
 Console.WriteLine($"somma: {num1+num2} differenza: {num1-num2} moltiplicazione: {num1*num2} quoziente: {num1/num2}");
-Console.WriteLine("Quale operazione vuoi eseguire?");
-char operazione=Console.ReadKey();
-if(operazione=='+')
 
+int voto=18;
+if (voto >= 90)
+{
+    Console.WriteLine("A");
+}
+else if(voto>=80)
+{
+    Console.WriteLine("B");
+}
+else
+{
+    Console.WriteLine("C");
+}
+
+Console.WriteLine("Inserisci un numero");
+int numerofb=int.Parse(Console.ReadLine());
+if (numerofb % 3==0 && numerofb%5!=0)
+{
+    Console.WriteLine("fizz");
+}
+else if(numerofb%3!=0 && numerofb%5==0)
+{
+    Console.WriteLine("buzz");
+}
+else if(numerofb%3==0 && numerofb%5==0)
+{
+    Console.WriteLine("fizzbuzz");
+}
+else
+{
+    Console.WriteLine(numerofb);
+}
+
+        
