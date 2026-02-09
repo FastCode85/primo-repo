@@ -1,82 +1,42 @@
-﻿using System.Globalization;
-
-Console.WriteLine("Inserisci un numero intero");
-string input=Console.ReadLine();
-int numero=int.Parse(input);
-Console.WriteLine($"Il numero inserito e' {numero}");
-Console.WriteLine($"Il tipo di dato e' {numero.GetType()}");
-
-Console.WriteLine("Inserisci un numero decimale");
-string input2=Console.ReadLine();
-double numeroDecimale=double.Parse(input2);
-Console.WriteLine($"Il numero decimale e' {numeroDecimale}");
-
-int numeroIntero=00123;
-string numeroStringa=numeroIntero.ToString();
-Console.WriteLine($"Il numero come stringa e' {numeroStringa}");
-
-double numeroDecimale2=9.99;
-int numeroIntero2=(int)numeroDecimale2; //casting da double a int
-Console.WriteLine($"Il numero convertito e' {numeroIntero2}");
-
-int x=5;
-int y=10;
-bool isEqual= (x==y);
-bool isNotEqual=(x!=y);
-bool isGreater=(x>y);
-bool isLess=(x<y);
-bool isGreaterOrEqual=(x>=y);
-bool isLessOrEqual=(x<=y);
-
-Console.WriteLine($"isEqual {isEqual} isNotEqual {isNotEqual} isGreater {isGreater} isLess {isLess} isGreaterOrEqual {isGreaterOrEqual} isLessOrEqual {isLessOrEqual}");
-
-bool a=true;
-bool b=false;
-bool andResult=a && b;
-bool orResult=a || b;
-bool notA=!a;
-Console.WriteLine($"andResult: {andResult} orResult: {orResult} notA: {notA}");
-
-double num1;
-Console.WriteLine("Inserisci il primo numero");
-num1=int.Parse(Console.ReadLine());
-
-double num2;
-Console.WriteLine("Inserisci il secondo numero");
-num2=int.Parse(Console.ReadLine());
-Console.WriteLine($"somma: {num1+num2} differenza: {num1-num2} moltiplicazione: {num1*num2} quoziente: {num1/num2}");
-
-int voto=18;
-if (voto >= 90)
-{
-    Console.WriteLine("A");
-}
-else if(voto>=80)
-{
-    Console.WriteLine("B");
-}
-else
-{
-    Console.WriteLine("C");
-}
-
+﻿const int NUMERO_PREDEFINITO=10;
 Console.WriteLine("Inserisci un numero");
-int numerofb=int.Parse(Console.ReadLine());
-if (numerofb % 3==0 && numerofb%5!=0)
+string numeroStringa=Console.ReadLine();
+int numero;
+bool res=int.TryParse(numeroStringa, out numero);
+if (res)
 {
-    Console.WriteLine("fizz");
-}
-else if(numerofb%3!=0 && numerofb%5==0)
-{
-    Console.WriteLine("buzz");
-}
-else if(numerofb%3==0 && numerofb%5==0)
-{
-    Console.WriteLine("fizzbuzz");
+    Console.WriteLine($"Somma: {NUMERO_PREDEFINITO+numero}");
 }
 else
 {
-    Console.WriteLine(numerofb);
+    Console.WriteLine("Il valore inserito non è un numero");
 }
 
+Console.WriteLine("Inserisci un valore");
+int valoreNumero=int.Parse(Console.ReadLine());
+switch (valoreNumero%3)
+{
+    case 0:
+        switch (valoreNumero % 5)
+        {
+            
         
+        case 0:
+            Console.WriteLine("Fizz buzz");
+            break;
+        default:
+            Console.WriteLine("Fizz");
+            break;
+        }
+    default:
+        switch(valoreNumero%5)
+        {
+            case 0:
+                Console.WriteLine("Buzz");
+                break;
+            default:
+                Console.WriteLine("Valore non divisibile per 3 o per 5");
+                break;
+        }
+        break;
+}
