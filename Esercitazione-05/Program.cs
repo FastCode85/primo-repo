@@ -1,32 +1,34 @@
-﻿using System.Collections;
-using System.Xml.Schema;
+﻿/*
+Programma che:
+- chiede all' utente di inserire nomi ad una lista finché non viene inserito 0
+- viene estratto un nome casuale e stampato a video
+- viene chiesto all' utente se vuole estrarre un altro nome casuale, se l'utente risponde "y" viene estratto e stampato 
+  un altro nome casuale, altrimenti il programma termina
+- il nome estratto deve essere rimosso dalla lista per evitare che venga estratto di nuovo
+*/
 
-List<int> lista=new List<int>();
 
-lista.AddRange(1,2,5,4,3);
-Console.WriteLine(string.Join(",",lista));
+List<string> listaNomi=new List<string>();
+string risp="1";
+//ciclo per l'inserimento dei nomi
+while(risp!="0")
+{
+    Console.WriteLine("Inserisci un nome o premi 0 per uscire");
+    risp=Console.ReadLine();
+    if(risp!="0")
+    {
+        listaNomi.Add(risp);
+    }
+}
 
-Console.WriteLine(lista.Contains(2));
-Console.WriteLine(lista.Contains(30));
-Console.WriteLine($"Indice del numero 2: {lista.IndexOf(2)}");
-Console.WriteLine($"Indice del numero 40: {lista.IndexOf(40)}");
-lista.Sort();
-Console.WriteLine($"Lista ordinata: {string.Join(",",lista)}");
-int[] numeriArray=lista.ToArray();
-Console.WriteLine($"Array ordinato: {string.Join(",",numeriArray)}");
-List<int> lista2=numeriArray.ToList();
-Console.WriteLine($"Lista2: {string.Join(",",lista2)}");
-Console.WriteLine($"Rimozione del valore 4: {lista2.Remove(4)}\nNuova lista: {string.Join(",",lista2)}");
-Console.WriteLine($"Rimozione del valore 40: {lista2.Remove(40)}\nNuova lista: {string.Join(",",lista2)}");
-lista2.RemoveAt(0);
-Console.WriteLine($"Rimozione dell' indice zero\nNuova lista: {string.Join(",",lista2)}");
-lista2.Clear();
-Console.WriteLine($"Pulizia completa della lista.\nNuova lista: {string.Join(",",lista2)}");
-lista.AddRange(6,7,8,9,10);
-Console.WriteLine($"Lista modificata con aggiunte: {string.Join(",",lista)}");
-lista.RemoveRange(1,5);
-Console.WriteLine($"Capacità della lista: {lista.Capacity}");
-Console.WriteLine($"Count della lista: {lista.Count}");
-lista.TrimExcess();
-Console.WriteLine($"Capacità della lista dopo trimexcess: {lista.Capacity}");
-Console.WriteLine($"Count della lista dopo trimexcess: {lista.Count}");
+Random random=new Random();
+risp="y";
+while (risp == "y" && listaNomi.Count>0)
+{
+    int numeroRandom=random.Next(0,listaNomi.Count);
+    Console.WriteLine($"Estratto un nome casuale: {listaNomi[numeroRandom]}. Premi y per estrarre un altro nome.");
+    listaNomi.RemoveAt(numeroRandom);
+    risp=Console.ReadLine();
+
+    
+}
