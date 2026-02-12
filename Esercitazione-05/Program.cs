@@ -1,91 +1,32 @@
-﻿using System.Runtime.CompilerServices;
-using System.Threading.Tasks.Dataflow;
+﻿using System.Collections;
+using System.Xml.Schema;
 
-int[] mioArray={5,3,4,6,6};
-int[] altroArray=new int[mioArray.Length];
+List<int> lista=new List<int>();
 
-Array.Copy(mioArray,altroArray,mioArray.Length);
-Console.WriteLine($"Altro array: {altroArray}");
-Console.WriteLine(string.Join(",",altroArray));
+lista.AddRange(1,2,5,4,3);
+Console.WriteLine(string.Join(",",lista));
 
-Array.Clear(altroArray,0,altroArray.Length);
-Console.WriteLine(string.Join(",",altroArray));
-
-Array.Copy(mioArray,altroArray,mioArray.Length);
-Array.Reverse(altroArray);
-Console.WriteLine(string.Join(",",altroArray));
-
-Array.Copy(mioArray,altroArray,mioArray.Length);
-Array.Sort(altroArray);
-Console.WriteLine(string.Join(",",altroArray));
-
-Array.Copy(mioArray,altroArray,mioArray.Length);
-Array.Sort(altroArray);
-Array.Reverse(altroArray);
-Console.WriteLine(string.Join(",",altroArray));
-
-int index=Array.IndexOf(mioArray,3);
-Console.WriteLine($"Indice: {index}");
-
-/*
-Programma che
-- crea un array di 5 elementi  numerici vuoti inizializzati a 0
-- chiede all utente di lanciare un dado premendo 1
-- Ad ogni lanco chiede se vuole tenere il risultato del lancio ( 1 si, 0 no )
-- Se si aggiunge il risultato del lancio all' array, fino alla capienza dell' array
-- ordina i lanci in modo decrescente 
-- copia i lanci con valore maggiore o uguale a 5 in un nuovo array
-*/
-
-Random random=new Random();
-int[] listaInteri=new int[5];
-int listaInteriIndex=0;
-
-while(true)
-{
-    if(listaInteriIndex<listaInteri.Length)
-    {
-        Console.WriteLine("Premi 1 per lanciare un dado, un altro carattere per uscire");
-        string s=Console.ReadLine();
-        if(s!="1")
-            break;
-        else
-        {
-            int valoreRandom=random.Next(1,7);
-            Console.WriteLine($"Dado lanciato, risultato: {valoreRandom}. Premi 1 per tenere il lancio");
-            string tenereLancio=Console.ReadLine();
-            if(tenereLancio=="1")
-            {
-                listaInteri[listaInteriIndex]=valoreRandom;
-                listaInteriIndex++;
-            }
-        }
-    }
-    else
-    {
-        break;
-    }
-}
-
-int[] copiaArray=new int[listaInteri.Length];
-int[] nuovoArray=new int[listaInteri.Length];
-Array.Copy(listaInteri,copiaArray,listaInteri.Length);
-Array.Clear(nuovoArray);
-int indexNuovoArray=0;
-foreach(int n in listaInteri)
-{
-    if(n>=5)
-    {
-        nuovoArray[indexNuovoArray]=n;
-        indexNuovoArray++;
-    }
-}
-
-Console.WriteLine($"Lista interi originale: {string.Join(",",listaInteri)}");
-Array.Sort(copiaArray);
-Array.Reverse(copiaArray);
-Console.WriteLine($"Lista interi decrescente: {string.Join(",",copiaArray)}");
-Console.WriteLine($"Lanci copiati: {string.Join(",",nuovoArray)}");
-
-
-
+Console.WriteLine(lista.Contains(2));
+Console.WriteLine(lista.Contains(30));
+Console.WriteLine($"Indice del numero 2: {lista.IndexOf(2)}");
+Console.WriteLine($"Indice del numero 40: {lista.IndexOf(40)}");
+lista.Sort();
+Console.WriteLine($"Lista ordinata: {string.Join(",",lista)}");
+int[] numeriArray=lista.ToArray();
+Console.WriteLine($"Array ordinato: {string.Join(",",numeriArray)}");
+List<int> lista2=numeriArray.ToList();
+Console.WriteLine($"Lista2: {string.Join(",",lista2)}");
+Console.WriteLine($"Rimozione del valore 4: {lista2.Remove(4)}\nNuova lista: {string.Join(",",lista2)}");
+Console.WriteLine($"Rimozione del valore 40: {lista2.Remove(40)}\nNuova lista: {string.Join(",",lista2)}");
+lista2.RemoveAt(0);
+Console.WriteLine($"Rimozione dell' indice zero\nNuova lista: {string.Join(",",lista2)}");
+lista2.Clear();
+Console.WriteLine($"Pulizia completa della lista.\nNuova lista: {string.Join(",",lista2)}");
+lista.AddRange(6,7,8,9,10);
+Console.WriteLine($"Lista modificata con aggiunte: {string.Join(",",lista)}");
+lista.RemoveRange(1,5);
+Console.WriteLine($"Capacità della lista: {lista.Capacity}");
+Console.WriteLine($"Count della lista: {lista.Count}");
+lista.TrimExcess();
+Console.WriteLine($"Capacità della lista dopo trimexcess: {lista.Capacity}");
+Console.WriteLine($"Count della lista dopo trimexcess: {lista.Count}");
