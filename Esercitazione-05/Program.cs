@@ -1,48 +1,82 @@
-﻿Dictionary<int,string> dizionario=new Dictionary<int,string>()
+﻿/*
+
+- crea un dizionario che associa un nome ad un numero di telefono con qualche dato di default
+- permette all' utente di aggiungere un numero di telefono
+- permette all'utente di modificare il numero di telefono associato ad un nome esistente
+- permette all' utente di eliminare un nome e il suo numero di telefono dal dizionario
+- nel caso di inserimento di un nome già esistente, il programma chiede se si vuole aggiornare il numero associato
+- nel caso di modifica e cancellazione deve prima stampare la rubrica in modo da poter visualizzare i nomi e i numeri prima di effettuare l'operazione
+- nel caso di eliminazione di un nome inesistente, stampare un messaggio d'errore
+*/
+
+Dictionary<string,string> dizionarioNumeri=new Dictionary<string,string>()
 {
-    {1,"uno"},
-    {2,"due"},
-    {3,"tre"}
+   {"marco","12345"}, 
+   {"andrea","54321"},
+   {"gianni","62254"},
 };
 
-dizionario.Add(4,"quattro");
-//dizionario.Add(1,"Uno aggiornato");
-Console.WriteLine("Valore 1: ");
-Console.WriteLine($"ContainsKey 1: {dizionario.ContainsKey(1)}");
-Console.WriteLine($"ContainsValue due: {dizionario.ContainsValue("due")}");
-bool tryGetBool=dizionario.TryGetValue(1, out string valore);
-Console.WriteLine($"TryGetValue 1: {tryGetBool}");
-dizionario[1]="uno modificato";
-Console.WriteLine($"Valore con chiave 1 modificato: {dizionario[1]}");
-dizionario.Remove(1);
-Console.WriteLine("Eliminato il valore con chiave 1");
-Console.WriteLine("Stampa dizionario");
-foreach(var kvp in dizionario)
-    Console.WriteLine($"Chiave: {kvp.Key} Valore: {kvp.Value}");
-Dictionary<int,List<string>> dizionarioListe=new Dictionary<int,List<string>>()
-{
-    {1, new List<string> {"nome","prezzo"} },
-    {2, new List<string> {"nome"} },
-    {3, new List<string> {"nome","prezzo","quantità"}}
-};
-dizionarioListe[1].Add("quantità");
-Console.WriteLine("Stampa dizionario liste");
-foreach(var kvp in dizionarioListe)
-    Console.WriteLine($"Chiave: {kvp.Key} Valore: {string.Join(",",kvp.Value)}");
- Dictionary<int, Dictionary<string,string>> dizionarioDizionari=new Dictionary<int, Dictionary<string,string>>()
- {
-    { 1,new Dictionary<string,string> { {"nome","prodotto1"},{"prezzo","20"} }},
-    { 2,new Dictionary<string,string> { {"nome","prodotto2"},{"prezzo","50"} }},
-    { 3,new Dictionary<string,string> { {"nome","prodotto3"}, {"prezzo","100"}}}
- };
 
- dizionarioDizionari[1].Add("quantità","100");
- Console.WriteLine("Stampa dizionarioDizionary");
- foreach(var kvp in dizionarioDizionari)
+while(true)
 {
-     Console.WriteLine($"Stampa per chiave {kvp.Key}");
-    foreach(var innerKvp in kvp.Value)
+    Console.WriteLine("Premi 1 per inserire, 2 per modificare, 3 per eliminare, 4 per visualizzare, altro per uscire");
+    string risp=Console.ReadLine().Trim();
+    if(risp=="1")
     {
-        Console.WriteLine($"chiave: {innerKvp.Key} | valore: {innerKvp.Value}");
+        Console.WriteLine("Inserisci un nome");
+        string nomeRubrica=Console.ReadLine();
+        Console.WriteLine("Inserisci un numero");
+        string numeroRubrica=Console.ReadLine();
+        dizionarioNumeri.Add(nomeRubrica, numeroRubrica);
     }
+    else if(risp=="2")
+    {
+        Console.WriteLine("Stampa del dizionario");
+        foreach(var kvp in dizionarioNumeri)
+        {
+            Console.WriteLine($"nome: {kvp.Key}\tnumero: {kvp.Value}");
+        }
+        Console.WriteLine("Quale elemento vuoi modificare?");
+        string nomeDaModificare=Console.ReadLine().Trim();
+        if(dizionarioNumeri.ContainsKey(nomeDaModificare))
+        {
+            Console.WriteLine($"inserisci il nuovo numero per {nomeDaModificare}");
+            string nuovoNumero=Console.ReadLine().Trim();
+            if(dizionarioNumeri.ContainsKey(nomeDaModificare))
+            {
+                dizionarioNumeri[nomeDaModificare]=nuovoNumero;
+                Console.WriteLine("Valore modificato");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Nome {nomeDaModificare} inesistente");
+        }
+    }
+    else if(risp=="3")
+    {
+        Console.WriteLine("Stampa del dizionario");
+        foreach(var kvp in dizionarioNumeri)
+        {
+            Console.WriteLine($"nome: {kvp.Key}\tnumero: {kvp.Value}");
+        }
+        Console.WriteLine("Quale nome vuoi eliminare?");
+        string nomeDaEliminare=Console.ReadLine();
+        bool risultato=dizionarioNumeri.Remove(nomeDaEliminare);
+        if(risultato)
+            Console.WriteLine("Nome rimosso");
+        else
+            Console.WriteLine("Nome non trovato");
+    }
+    else if(risp=="4")
+    {
+        Console.WriteLine("Stampa del dizionario");
+        foreach(var kvp in dizionarioNumeri)
+        {
+            Console.WriteLine($"nome: {kvp.Key}\tnumero: {kvp.Value}");
+        }
+    }
+    else
+        break;
+
 }
