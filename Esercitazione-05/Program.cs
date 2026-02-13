@@ -97,7 +97,7 @@ while(true)
             Console.WriteLine("Inserisci un nuovo prodotto");
             risp=Console.ReadLine();
             arrayString=risp.Split(",");
-            parti=risp.Split(",").Length;
+            parti=arrayString.Length;
             if(parti==3)
             {
 
