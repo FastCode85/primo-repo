@@ -1,139 +1,48 @@
-﻿/*
-
-- chiede all' utente di inserire il nome di un prodotto il prezzo e la quantità intervallati da una virgola
-- si ripulisce la stringa dagli spazi
-- verifichiamo che l' input sia valido ( ossia quando ha tre parti )
-- se l'input non è corretto richiede di nuovo l'input
-- ogni prodotto viene aggiunto ad una lista di stringhe con il formato "nome: prodotto - prezzo: 10.5 - quantità: 2"
-- viene chiesto ll' utente se vuole inserire un altro prodotto
-- se l' utente risponde "y" continua, altrimenti esce
-- la lista viene ordinata in ordine alfabetico e stampata a video
- */
-
-int parti;
-string risp;
-List<string> listaProdotti=new List<string>();
-
-while(true)
+﻿Dictionary<int,string> dizionario=new Dictionary<int,string>()
 {
-    Console.WriteLine("Inserisci un prodotto");
-    risp=Console.ReadLine();
-    risp=risp.Trim();
-    string[] arrayString=risp.Split(",");
-    parti=arrayString.Length;
-    if(parti==3)
+    {1,"uno"},
+    {2,"due"},
+    {3,"tre"}
+};
+
+dizionario.Add(4,"quattro");
+//dizionario.Add(1,"Uno aggiornato");
+Console.WriteLine("Valore 1: ");
+Console.WriteLine($"ContainsKey 1: {dizionario.ContainsKey(1)}");
+Console.WriteLine($"ContainsValue due: {dizionario.ContainsValue("due")}");
+bool tryGetBool=dizionario.TryGetValue(1, out string valore);
+Console.WriteLine($"TryGetValue 1: {tryGetBool}");
+dizionario[1]="uno modificato";
+Console.WriteLine($"Valore con chiave 1 modificato: {dizionario[1]}");
+dizionario.Remove(1);
+Console.WriteLine("Eliminato il valore con chiave 1");
+Console.WriteLine("Stampa dizionario");
+foreach(var kvp in dizionario)
+    Console.WriteLine($"Chiave: {kvp.Key} Valore: {kvp.Value}");
+Dictionary<int,List<string>> dizionarioListe=new Dictionary<int,List<string>>()
+{
+    {1, new List<string> {"nome","prezzo"} },
+    {2, new List<string> {"nome"} },
+    {3, new List<string> {"nome","prezzo","quantità"}}
+};
+dizionarioListe[1].Add("quantità");
+Console.WriteLine("Stampa dizionario liste");
+foreach(var kvp in dizionarioListe)
+    Console.WriteLine($"Chiave: {kvp.Key} Valore: {string.Join(",",kvp.Value)}");
+ Dictionary<int, Dictionary<string,string>> dizionarioDizionari=new Dictionary<int, Dictionary<string,string>>()
+ {
+    { 1,new Dictionary<string,string> { {"nome","prodotto1"},{"prezzo","20"} }},
+    { 2,new Dictionary<string,string> { {"nome","prodotto2"},{"prezzo","50"} }},
+    { 3,new Dictionary<string,string> { {"nome","prodotto3"}, {"prezzo","100"}}}
+ };
+
+ dizionarioDizionari[1].Add("quantità","100");
+ Console.WriteLine("Stampa dizionarioDizionary");
+ foreach(var kvp in dizionarioDizionari)
+{
+     Console.WriteLine($"Stampa per chiave {kvp.Key}");
+    foreach(var innerKvp in kvp.Value)
     {
-        
-        bool valid=true;
-        foreach(string s in arrayString)
-        {
-            string trimmed=s.Trim();
-            if(trimmed.Length==0)
-            {
-                valid=false;
-                break;
-            }
-        }
-        if(valid)
-        {
-            string[] trimmedArray=new string[arrayString.Length];
-            int index=0;
-            foreach(string s in arrayString)
-            {
-                trimmedArray[index]=s.Trim();
-                index++;
-            }
-            listaProdotti.Add(string.Join(",",trimmedArray));
-            break;
-        }
+        Console.WriteLine($"chiave: {innerKvp.Key} | valore: {innerKvp.Value}");
     }
 }
-
-while(true)
-{
-
-    parti=risp.Split(",").Length;
-    string[] arrayString=risp.Split(",");
-    if(parti!=3)
-    {
-        Console.WriteLine("Input non valido, reinserisci il prodotto");
-        risp=Console.ReadLine();
-        parti=arrayString.Length;
-        if(parti==3)
-        {
-            
-            bool valid=true;
-            foreach(string s in arrayString)
-            {
-                string trimmed=s.Trim();
-                if(trimmed.Length==0)
-                {
-                    valid=false;
-                    break;
-                }
-            }
-            if(valid)
-            {
-
-                string[] trimmedArray=new string[arrayString.Length];
-                int index=0;
-                foreach(string s in arrayString)
-                {
-                    trimmedArray[index]=s.Trim();
-                    Console.WriteLine($"trimmed: {trimmedArray[index]} original: {s}");
-                    index++;
-                }
-                listaProdotti.Add(string.Join(",",trimmedArray));
-                break;
-            }
-        }
-    }
-    else
-    {
-        Console.WriteLine("Premi y per aggiungere un nuovo prodotto");
-        risp=Console.ReadLine();
-        if(risp=="y")
-        {
-            Console.WriteLine("Inserisci un nuovo prodotto");
-            risp=Console.ReadLine();
-            arrayString=risp.Split(",");
-            parti=arrayString.Length;
-            if(parti==3)
-            {
-
-                bool valid=true;
-                foreach(string s in arrayString)
-                {
-                    string trimmed=s.Trim();
-                    if(trimmed.Length==0)
-                    {
-                        valid=false;
-                        break;
-                    }
-                }
-                if(valid)
-                {
-
-                    string[] trimmedArray=new string[arrayString.Length];
-                    int index=0;
-                    foreach(string s in arrayString)
-                    {
-                        trimmedArray[index]=s.Trim();
-
-                        index++;
-                    }
-                    listaProdotti.Add(string.Join(",",trimmedArray));
-                    
-                }
-            }
-        }
-        else
-        {
-            break;
-        }
-    }
-}
-
-listaProdotti.Sort();
-Console.WriteLine($"Risultato lista: {string.Join("|",listaProdotti)}");
- 
