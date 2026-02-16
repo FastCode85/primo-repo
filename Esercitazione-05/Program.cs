@@ -19,8 +19,10 @@ Dictionary<string,string> dizionarioNumeri=new Dictionary<string,string>()
 
 while(true)
 {
+    Console.Clear();
     Console.WriteLine("Premi 1 per inserire, 2 per modificare, 3 per eliminare, 4 per visualizzare, altro per uscire");
     string risp=Console.ReadLine().Trim();
+    Console.Clear();
     if(risp=="1")
     {
         Console.WriteLine("Inserisci un nome");
@@ -80,3 +82,5 @@ while(true)
         break;
 
 }
+
+
