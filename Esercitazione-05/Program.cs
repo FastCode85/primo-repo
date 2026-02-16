@@ -1,69 +1,33 @@
 ﻿/*
-
-Programma che:
-- genera una password casuale di lunghezza compresa tra i 5 e 8 caratteri, che deve contenere almeno una lettera maiuscola, 
-una minuscola, un numero e un carattere speciale. La password non deve contenere spazi
-
+Programma che
+- legge un elenco di email, maschera la parte dell' utente lasciando visibile la prima e
+l'ultima lettera mantenendo visibile il dominio (es a*****o@gmail.com) e le stampa
 */
 
-int numeroCaratteri;
-int counter=0;
-Random random=new Random();
-numeroCaratteri=random.Next(5,9);
 
 
-bool passwordValida=false;
-Console.WriteLine($"Generazione di password di {numeroCaratteri} caratteri");
-while(!passwordValida)
+List<string> listaEmail=new List<string> {"marco@gmail.com","francesco@hotmail.it","matteo@gmail.it"};
+
+
+foreach(string mail in listaEmail)
 {
-    bool haMaiuscola=false;
-    bool haMinuscola=false;
-    bool haNumero=false;
-    bool haCarattereSpeciale=false; 
-    string password="";
-    counter=0;
-    while(counter<numeroCaratteri)
+    int i=0;
+    string nuovaMail="";
+    bool modify=true;
+    Console.WriteLine($"Stringa da modificare: {mail}");
+    while(i<mail.Length)
     {
-        char c=' ';
-        while(c==' ')
-        {
-            int codiceCarattere=random.Next(50,255);
-            c=(char)codiceCarattere;
-            if(Char.IsAsciiLetter(c) && !Char.IsAsciiLetterLower(c))
-            {
-                haMaiuscola=true;
-                Console.WriteLine($"Trovato carattere maiuscola: {c}");
-            }
-            else if(Char.IsAsciiLetter(c) && Char.IsAsciiLetterLower(c))
-            {
-                haMinuscola=true;
-                Console.WriteLine($"Trovato carattere minuscola: {c}");
-            }
-            else if(Char.IsAsciiDigit(c))
-            {
-                haNumero=true;
-                Console.WriteLine($"Trovato carattere numero: {c}");
-            }
-            else
-            {
-                haCarattereSpeciale=true;
-                Console.WriteLine($"Trovato carattere speciale, codice: {codiceCarattere} carattere {c}");
-            }
-            
-            Console.WriteLine($"carattere casuale: {c} numero: {codiceCarattere}");
-            
-        }
-        password=password+c;
-        Console.WriteLine($"Password: {password}");
-        counter++;
+        char nextChar='a';
+        if(i+1<mail.Length)
+            nextChar=mail[i+1];
+        if(i>0 && modify==true && nextChar!='@')
+            nuovaMail+="*";
+        else
+            nuovaMail+=mail[i];
+        i++;
+        if(i<mail.Length)
+            if(mail[i]=='@')
+                modify=false;
     }
-    if(haMaiuscola && haMinuscola && haNumero && haCarattereSpeciale)
-    {
-        passwordValida=true;
-        Console.WriteLine($"Password generata: {password}. {haMaiuscola} {haMinuscola} {haNumero} {haCarattereSpeciale} Lunghezza password {password.Length}");
-    }
-    else
-    {
-        Console.WriteLine($"Password non valida. Generazione di un'altra password di {numeroCaratteri} caratteri. {haMaiuscola} {haMinuscola} {haNumero} {haCarattereSpeciale}");
-    }
+    Console.WriteLine($"Stringa modificata: {nuovaMail}");
 }
