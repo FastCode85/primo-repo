@@ -1,50 +1,28 @@
-﻿/*
-Legge un elenci di frasi da una lista, per ognuna genera uno slug (versione della frase 
-adatta ad essere usata in un url) e le stampa. Regole dello slug
-- deve essere tutto in minuscolo
-- sostituire gli spazi con i trattini
-- deve rimuovere la punteggiatura
-- deve rimuovere eventuali trattini doppi
-*/
+﻿DateTime datetime=new DateTime(1990,1,1);
+Console.WriteLine($"Datetime: {datetime}");
+datetime=DateTime.Today;
+Console.WriteLine($"Oggi è {datetime}");
+Console.WriteLine($"Oggi è {datetime.ToShortDateString()}");
+Console.WriteLine($"Oggi è {datetime.ToLongDateString()}");
+Console.WriteLine($"Oggi è {datetime.ToString("dd/MM/yyyy")}");
+string dateTimeString="2024-10-11";
+DateTime dt=DateTime.Parse(dateTimeString);
+bool result=DateTime.TryParse(dateTimeString, out DateTime s);
+Console.WriteLine($"dt: {dt}");
+if(result)
+    Console.WriteLine($"s: {s}");
+DateTimeOffset now=DateTimeOffset.UtcNow;
+long timestamp=now.ToUnixTimeSeconds();
+Console.WriteLine($"Il timestamp attuale è {timestamp}");
+Console.WriteLine($"dt giorno: {dt}");
+dt=dt.AddDays(1);
+Console.WriteLine($"dt giorno dopo: {dt}");
+Console.WriteLine($"dt giorno dopo: {dt:dddd}");
+TimeSpan timeSpan=new TimeSpan(2,0,0,0);
+DateTime traDueGiorni=DateTime.Today.Add(timeSpan);
+Console.WriteLine($"Tra due giorni: {traDueGiorni}");
 
-List<string> listaFrasi=new List<string>();
-List<string> listaFrasiModificate=new List<string>();
-char[] punteggiatura={',','.',';',':','!','?'};
-listaFrasi.Add("Questa è--, -- una frase..");
-listaFrasi.Add("Seconda frase, per l'esercitazione");
-
-int index=0;
-foreach(string frase in listaFrasi)
-{
-    string fraseModificata=frase.ToLower();
-    Console.WriteLine($"Frase modificata toLower\n{fraseModificata}");
-    fraseModificata=fraseModificata.Replace(' ','-');
-    Console.WriteLine($"Frase modificata replace spazio\n{fraseModificata}");
-    for(int i=0;i<punteggiatura.Length;i++)
-    {
-        Console.WriteLine($"Ricerca segno punteggiatura per carattere {punteggiatura[i]} i: {i}");
-        while(fraseModificata.IndexOf(punteggiatura[i])!=-1)
-        {
-            Console.WriteLine($"trovato carattere da eliminare all'indice {fraseModificata.IndexOf(punteggiatura[i]) } frase: {fraseModificata} i: {i}");
-            fraseModificata=fraseModificata.Remove(fraseModificata.IndexOf(punteggiatura[i]),1);
-            Console.WriteLine($"carattere eliminato, frase: {fraseModificata} i: {i}");
-            
-        } 
-    }          
-    Console.WriteLine($"Frase modificata con punteggiatura\n{fraseModificata}");
-    
-    for(int i=0;i<fraseModificata.Length-1;i++)
-    {
-        
-        if(fraseModificata[i]=='-' && fraseModificata[i+1]=='-')
-        {
-            fraseModificata=fraseModificata.Remove(i,1);
-            //Console.WriteLine($"rimosso carattere {i} frase: {fraseModificata}");
-            i--;
-        }
-    }
-    
-    Console.WriteLine($"Frase finale: {fraseModificata}");
-}
-
-
+DateTime dataNascita=new DateTime(1985,3,20);
+DateTime oggi=DateTime.Now;
+TimeSpan diffTime=oggi.Subtract(dataNascita);
+Console.WriteLine($"Giorni: {diffTime.Days} d {(diffTime.Days/365)}");
