@@ -1,29 +1,36 @@
 ﻿/*
 
-Creare una funzione tipo String che si comporta come un ReadLine avanzato che implementa la validazione dell'input:
-- trim: rimuove gli spazi all'inizio e alla fine
-- IsNullOrEmpty: verifica se la stringa è null o vuota
-- ToLower: converte la stringa in minuscolo
+Uan funzione che prende in input un numero intero e restituisce il numero solo se è pari, 
+altrimenti ritorna un messaggio d'uscita.
+
 
 */
 
-Console.WriteLine(ReadLineAvanzato());
+int numero=RichiediNumero();
 
-string ReadLineAvanzato()
-{
-    bool valido=false;
-    string s="";
-    while(!valido)
+int RichiediNumero()
+{   
+    while(true)
     {
-        Console.WriteLine("Inserisci una frase");
-        s=Console.ReadLine();
-        s=s.Trim();
-        Console.WriteLine(s);
-        valido=string.IsNullOrEmpty(s);
-        if(valido)
-            Console.WriteLine("La stringa è null o vuota");
+        Console.WriteLine("Inserisci un numero");
+        string s=Console.ReadLine();
+        bool res=int.TryParse(s, out int num);
+        if(res)
+        {
+            if(NumeroPari(num))
+                return num;
+            else
+                Console.WriteLine("Il numero non è pari.");
+        }
+        else
+            Console.WriteLine("Input non valido.");
     }
-    return s.ToLower();
 }
 
-
+bool NumeroPari(int numero)
+{
+    if(numero%2==0)
+        return true;
+    else
+        return false;
+}
