@@ -1,90 +1,126 @@
 ﻿/*
 
-Programma calcolatrice basato sulle funzioni
-- l'utente deve inserire una operazione da calcolare
-- Il programma calcolerà l'operazione in base all'input se l'operazione è possibile
--l'input deve essere una stringa di input unica
-- deve avere due numeri e solo un operatore
+- implementazione dell' esercitazione del modulo11 metodi dizionario con funzioni
 
 */
 
-Console.WriteLine("Inserisci l'operazione da calcolare nel formato \"numero1 numero2 operatore\"");
-string input=Console.ReadLine();
-string[] splittedInput=input.Split(" ");
-
-
-if(OperatoreValido(Operatore(splittedInput)))
+Dictionary<string, string> rubrica = new Dictionary<string, string>()
 {
-    if(NumeriValidi(splittedInput[0],splittedInput[1]))
+    { "Nome 1", "1234567890" },
+    { "Nome 2", "0987654321" },
+    { "Nome 3", "5555555555" }
+};
+
+// gestione generale del programma
+bool continua = true; // variabile per controllare se continuare o meno il programma
+
+
+while (continua)
+{
+
+    StampaMenu();
+    string scelta = Console.ReadLine().Trim();
+
+    switch (scelta)
     {
-        double risultato=Calcola(
-            double.Parse(splittedInput[0]),
-            double.Parse(splittedInput[1]),
-            splittedInput[2]
-        );
-        Console.WriteLine($"Risultato: {risultato}");
+        case "1":
+            // codice per aggiungere un contatto
+            AggiungiContatto();
+            break;
+        case "2":
+            // codice per modificare un contatto
+            ModificaContatto(rubrica);
+            break;
+        case "3":
+            // codice per eliminare un contatto
+            EliminaContatto(rubrica);
+            break;
+        case "4":
+            // codice per visualizzare la rubrica
+            StampaRubrica(rubrica);
+            break;
+        case "5":
+            continua = false; // esce dal programma
+            break;
+        default:
+            Console.WriteLine("Scelta non valida. Riprova.");
+            break;
     }
 }
 
-double Calcola(double numero1, double numero2, string operatore)
+void EliminaContatto(Dictionary<string,string> rubrica)
 {
-    if(operatore=="+")
+    StampaRubrica(rubrica);
+    Console.WriteLine("Inserisci il nome del contatto da eliminare:");
+    string nomeElimina = Console.ReadLine().Trim();
+    if (rubrica.ContainsKey(nomeElimina))
     {
-        return numero1+numero2;
+        rubrica.Remove(nomeElimina);
+        Console.WriteLine("Contatto eliminato.");
     }
-    else if(operatore=="-")
+    else
     {
-        return numero1-numero2;
+        Console.WriteLine("Contatto non trovato.");
     }
-    else if(operatore=="*")
+}
+void StampaRubrica(Dictionary<string,string> rubrica)
+{
+    Console.WriteLine("Rubrica:");
+    foreach (var kvp in rubrica)
     {
-        return numero1*numero2;
+        Console.WriteLine($"Nome: {kvp.Key}\tNumero: {kvp.Value}");
     }
-    else if(operatore=="/")
+}
+void ModificaContatto(Dictionary<string,string> rubrica)
+{
+    StampaRubrica(rubrica);
+    Console.WriteLine("Inserisci il nome del contatto da modificare:");
+    string nomeModifica = Console.ReadLine().Trim();
+
+    if (rubrica.ContainsKey(nomeModifica))
     {
-        if(numero2!=0)
-            return numero1/numero2;
-        else
+        Console.WriteLine("Inserisci il nuovo numero di telefono:");
+        string nuovoNumero = Console.ReadLine().Trim();
+        rubrica[nomeModifica] = nuovoNumero;
+        Console.WriteLine("Contatto modificato.");
+    }
+    else
+    {
+        Console.WriteLine("Contatto non trovato.");
+    }
+}
+void AggiungiContatto()
+{
+    Console.WriteLine("Inserisci il nome del contatto:");
+    string nome = Console.ReadLine().Trim();
+
+    Console.WriteLine("Inserisci il numero di telefono del contatto:");
+    string numero = Console.ReadLine().Trim();
+
+    if (rubrica.ContainsKey(nome))
+    {
+        Console.WriteLine("Il contatto esiste già. Vuoi aggiornare il numero di telefono? (s/n)");
+
+        string risposta = Console.ReadLine().Trim().ToLower();
+        if (risposta == "s")
         {
-            Console.WriteLine("Attenzione, divisione per zero");
-            return 0;
+            rubrica[nome] = numero; // aggiorna il numero di telefono del contatto esistente
+            Console.WriteLine("Numero di telefono aggiornato.");
         }
     }
     else
     {
-        Console.WriteLine("Errore nella funzione Calcola, operatore non valido");
-        return 0;
+        rubrica.Add(nome, numero);
+        Console.WriteLine("Contatto aggiunto.");
     }
 }
 
-bool NumeriValidi(string numero1, string numero2)
+void StampaMenu()
 {
-    bool risultato1=double.TryParse(numero1,out double numeroDouble1);
-    bool risultato2=double.TryParse(numero2,out double numeroDouble2);
-    if(risultato1 && risultato2)
-        return true;
-    else
-    {
-        Console.WriteLine("Numeri non validi");
-        return false;
-    }
-}
-
-bool OperatoreValido(string operatore)
-{
-    if(operatore=="+" || operatore=="-" || operatore=="*" || operatore=="/")
-        return true;
-    else
-        return false;
-}
-
-string Operatore(string[] input)
-{
-    if(input.Length!=3)
-    {
-        Console.WriteLine($"Problema di input nella funzione operatore, input.length: {input.Length}");
-        return "";
-    }
-    else
-        return input[2];
+    Console.WriteLine("Scegli un'opzione:");
+    Console.WriteLine("1. Aggiungi un contatto");
+    Console.WriteLine("2. Modifica un contatto");
+    Console.WriteLine("3. Elimina un contatto");
+    Console.WriteLine("4. Visualizza la rubrica");
+    Console.WriteLine("5. Esci");
 }
