@@ -19,13 +19,12 @@ while (continua)
 {
 
     StampaMenu();
-    string scelta = Console.ReadLine().Trim();
-
+    string scelta=LeggiInput("");
     switch (scelta)
     {
         case "1":
             // codice per aggiungere un contatto
-            AggiungiContatto();
+            AggiungiContatto(rubrica);
             break;
         case "2":
             // codice per modificare un contatto
@@ -43,7 +42,7 @@ while (continua)
             continua = false; // esce dal programma
             break;
         default:
-            Console.WriteLine("Scelta non valida. Riprova.");
+            5
             break;
     }
 }
@@ -51,8 +50,7 @@ while (continua)
 void EliminaContatto(Dictionary<string,string> rubrica)
 {
     StampaRubrica(rubrica);
-    Console.WriteLine("Inserisci il nome del contatto da eliminare:");
-    string nomeElimina = Console.ReadLine().Trim();
+    string nomeElimina=LeggiInput("Inserisci il nome del contatto da eliminare:");
     if (rubrica.ContainsKey(nomeElimina))
     {
         rubrica.Remove(nomeElimina);
@@ -63,6 +61,7 @@ void EliminaContatto(Dictionary<string,string> rubrica)
         Console.WriteLine("Contatto non trovato.");
     }
 }
+
 void StampaRubrica(Dictionary<string,string> rubrica)
 {
     Console.WriteLine("Rubrica:");
@@ -74,9 +73,7 @@ void StampaRubrica(Dictionary<string,string> rubrica)
 void ModificaContatto(Dictionary<string,string> rubrica)
 {
     StampaRubrica(rubrica);
-    Console.WriteLine("Inserisci il nome del contatto da modificare:");
-    string nomeModifica = Console.ReadLine().Trim();
-
+    string nomeModifica=LeggiInput("Inserisci il nome del contatto da modificare:");
     if (rubrica.ContainsKey(nomeModifica))
     {
         Console.WriteLine("Inserisci il nuovo numero di telefono:");
@@ -89,19 +86,23 @@ void ModificaContatto(Dictionary<string,string> rubrica)
         Console.WriteLine("Contatto non trovato.");
     }
 }
-void AggiungiContatto()
-{
-    Console.WriteLine("Inserisci il nome del contatto:");
-    string nome = Console.ReadLine().Trim();
 
-    Console.WriteLine("Inserisci il numero di telefono del contatto:");
-    string numero = Console.ReadLine().Trim();
+string LeggiInput(string messaggio)
+{
+    Console.WriteLine(messaggio);
+    string input = Console.ReadLine().Trim();
+    Console.Clear();
+    return input;
+}
+
+void AggiungiContatto(Dictionary<string,string> rubrica)
+{
+    string nome=LeggiInput("Inserisci il nome del contatto:");
+    string numero = LeggiInput("Inserisci il numero di telefono del contatto:");
 
     if (rubrica.ContainsKey(nome))
     {
-        Console.WriteLine("Il contatto esiste già. Vuoi aggiornare il numero di telefono? (s/n)");
-
-        string risposta = Console.ReadLine().Trim().ToLower();
+        string risposta=LeggiInput("Il contatto esiste già. Vuoi aggiornare il numero di telefono? (s/n)");
         if (risposta == "s")
         {
             rubrica[nome] = numero; // aggiorna il numero di telefono del contatto esistente
