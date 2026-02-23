@@ -49,7 +49,7 @@ while (continua)
             break;
         case "4":
             // codice per visualizzare la rubrica
-            StampaRubricaAvanzata(rubricaAvanzata,true);
+            StampaRubricaAvanzata(rubricaAvanzata,false);
             break;
         case "5":
             continua = false; // esce dal programma
