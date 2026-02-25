@@ -1,148 +1,4 @@
-﻿/*string path=@"test.txt";
-File.WriteAllText(path,"Hello world");
-File.AppendAllText(path,"\nTesto aggiuntivo");
-
-if(File.Exists(path))
-{
-    string content=File.ReadAllText(path);
-    Console.WriteLine($"Contenuto del file: {content}");
-}
-else
-{
-    Console.WriteLine("Il file non esiste");
-}
-
-if(File.Exists(path))
-{
-    File.Delete(path);
-}
-else
-{
-    Console.WriteLine("Il file non esiste");
-}
-
-List<string> lines=new List<string>();
-lines.Add("line1");
-lines.Add("line2");
-File.WriteAllLines(path,lines);
-
-
-string[] arrayLines=File.ReadAllLines(path);
-Console.WriteLine("Stampa di tutte le righe");
-foreach(string s in arrayLines)
-{
-    Console.WriteLine(s);
-}
-
-string sourcePath=@"source.txt";
-string destinationPath=@"destination.txt";
-if(File.Exists(sourcePath))
-{
-    File.Copy(sourcePath,destinationPath);
-}
-else
-{
-    Console.WriteLine("Il file di origine non esiste");
-}
-
-string oldFileName=@"oldfilename.txt";
-string newFileName=@"newfilename.txt";
-if(File.Exists(oldFileName))
-{
-    File.Move(oldFileName,newFileName);
-}
-else
-{
-    Console.WriteLine("Il file da rinominare non esiste");
-}
-
-FileInfo info=new FileInfo(path);
-Console.WriteLine(info.Length);
-Console.WriteLine(info.CreationTime);
-Console.WriteLine(info.LastWriteTime);
-Console.WriteLine(info.Extension);
-Console.WriteLine(info.Name);
-Console.WriteLine(info.DirectoryName);
-
-string dir=@"test";
-Directory.CreateDirectory(dir);
-
-if(Directory.Exists(dir))
-{
-    Console.WriteLine("Directory exists");
-}
-else
-{
-    Directory.CreateDirectory(dir);
-    
-}
-
-if(Directory.Exists(dir))
-{
-    Directory.Delete(dir);
-}
-else
-{
-    Console.WriteLine("Il path non esiste");
-}
-
-string sourceDir=@"sourceDir";
-string destinationDir=@"destinationDir";
-if(Directory.Exists(dir))
-{
-    //DirectoryCopy(sourceDir, destinationDir,true);
-}
-
-if(Directory.Exists(dir))
-{
-    string[] files=Directory.GetFiles(dir);
-    foreach(string file in files)
-    {
-        Console.WriteLine(file);
-    }
-}
-else
-{
-    Console.WriteLine("La dir non esiste");
-}
-
-if(Directory.Exists(dir))
-{
-    string[] dirs=Directory.GetDirectories(dir);
-    foreach(string direc in dirs)
-    {
-        Console.WriteLine(direc);
-    }
-}
-else
-{
-    Console.WriteLine("La dir non esiste");
-}
-
-string absolutePath=@"C:\Users\sviluppatore2\Documents\projects";
-string fileName=Path.GetFileName(absolutePath);
-string directory=Path.GetDirectoryName(absolutePath);
-string extension=Path.GetExtension(absolutePath);
-string fileNameWithoutExtension=Path.GetFileNameWithoutExtension(absolutePath);
-string combinedPath=Path.Combine("c:\\Users","Username","Documents","file.txt");
-Console.WriteLine($"Dati: filename:{fileName}\tdirectory:{directory}\textension:{extension}\tfilenamewithoutextension{fileNameWithoutExtension}\t{combinedPath}");
-
-DirectoryInfo infoDir=new DirectoryInfo(dir);
-Console.WriteLine(infoDir.CreationTime);
-Console.WriteLine(infoDir.LastWriteTime);
-Console.WriteLine(infoDir.Name);
-Console.WriteLine(infoDir.FullName);
-//static void DirectoryCopy(string src, string dest,)
-
-string path2=@"test.txt";
-using(StreamReader reader=new StreamReader(path2))
-{
-    string content=reader.ReadToEnd();
-    Console.WriteLine(content);
-}
-*/
-
-/*
+﻿/*
 
 Creare un programma file manager che consenta all'utente di eseguire operazioni sui file e sulle directory. 
 Il programma dovrebbe offrire un menu con le seguenti opzioni
@@ -179,23 +35,18 @@ while(continua)
     {
         string backupDirectory=CreateBackupDirectory();
         Backup(directorySelezionata,backupDirectory);
-
     }
     else if(risposta=="4")
     {
         string directoryFilesDivisi=CreateDividiPerEstensioneDirectory();
         DividiPerEstensione(directorySelezionata,directoryFilesDivisi);
-
     }
     else if(risposta=="5")
     {
-        
         EliminaFiles(directorySelezionata);
-
     }
     else if(risposta=="6")
     {
-        
         break;
     }
 }
@@ -268,7 +119,6 @@ void DividiPerEstensione(string directorySelezionata, string directoryFilesDivis
 
 void Backup(string directorySelezionata,string currentBackupDirectory)
 {
-    decimal.
     if(!Directory.Exists(directorySelezionata))
     {
         Console.WriteLine($"Attenzione, la cartella {directorySelezionata} non esiste, uscita da Backup()");
@@ -367,6 +217,7 @@ string LeggiDirectory()
             Console.WriteLine("Cartella non valida");
     }
 }
+
 void StampaMenu(string directorySelezionata)
 {
     Console.WriteLine($"Directory Selezionata {OutputDirectorySelezionata(directorySelezionata)}\nScegli una voce del menu");
