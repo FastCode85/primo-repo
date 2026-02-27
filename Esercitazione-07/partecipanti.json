@@ -1,0 +1,62 @@
+[
+  {
+    "id": 0,
+    "nome": "Partecipante 1",
+    "eta": 30,
+    "presente": true,
+    "interessi": [
+      "scacchi",
+      "dama"
+    ]
+  },
+  {
+    "id": 1,
+    "nome": "Partecipante 2",
+    "eta": 50,
+    "presente": true,
+    "interessi": [
+      "p",
+      "m",
+      "s"
+    ]
+  },
+  {
+    "id": 2,
+    "nome": "zio",
+    "eta": 55,
+    "presenza": false,
+    "interessi": [
+      "scacchi",
+      "lettura"
+    ]
+  },
+  {
+    "id": 3,
+    "nome": "gg",
+    "eta": "4",
+    "presente": true,
+    "interessi": [
+      ""
+    ]
+  },
+  {
+    "id": 4,
+    "nome": "jj",
+    "eta": "5",
+    "presente": true,
+    "interessi": [
+      "gg",
+      "gg"
+    ]
+  },
+  {
+    "id": 5,
+    "nome": "teo",
+    "eta": "15",
+    "presente": false,
+    "interessi": [
+      "int1",
+      "int2"
+    ]
+  }
+]

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 string path=@"test.json";
 string json=File.ReadAllText(path);
@@ -65,88 +67,198 @@ se vuole modificare il nome,l'età,la presenza o gli interessi.
 in questo modo possiamo tenere traccia di tutti i partecipanti creati
 
 */
+
+
 while(true)
 {
     
-    int lastId=LeggiUltimoId("lastId.json");
-    Console.WriteLine($"Letto file json. lastID: {lastId}");
-    Console.WriteLine("Inserisci un nuovo partecipante, oppure 0 per uscire");
+
+    Console.WriteLine("Premi 1 per aggiungere un partecipante\nPremi 2 per vedere i partecipanti\nPremi 3 per modificare un partecipante\nPremi 0 per uscire");
     string risposta=Console.ReadLine();
     if(risposta=="0")
         break;
-    else
+    else if(risposta=="1")
     {
-        lastId++;
-        ScriviPartecipante(risposta,lastId);
-        ScriviLastId(lastId);
+        var nuovoPartecipante=LeggiPartecipante();
+        Console.WriteLine($"TIPO DI DATO INTERESSI: {nuovoPartecipante.interessi.GetType()}");
+        ScriviPartecipante(nuovoPartecipante);
+        //Console.WriteLine($"nuovoPartecipante nome {nuovoPartecipante.nome}");
+    }
+    else if(risposta=="2")
+    {
+        StampaPartecipanti();
+    }
+    else if(risposta=="3")
+    {
+        StampaPartecipanti();
+        Console.WriteLine("Inserisci il numero del partecipante da modificare");
+        int numero=int.Parse(Console.ReadLine());
+        ModificaPartecipante(numero);
+    }
+
+}
+
+void ModificaPartecipante(int numeroPartecipante)
+{
+    
+    List<dynamic> listaPartecipanti=new List<dynamic>();
+    string contenutoFile=File.ReadAllText("partecipanti.json");
+    listaPartecipanti=JsonConvert.DeserializeObject<List<dynamic>>(contenutoFile);  
+    string scelta="";
+    while(true)
+    {
+        Console.WriteLine("Inserisci 1 per modificare il nome\nInserisci 2 per modificare l'età\nnInserisci 3 per modificare la presenza\nnInserisci 4 per modificare gli interessi\nAltro per uscire");
+        scelta=Console.ReadLine();
+        if(scelta=="1")
+        {
+            Console.WriteLine("Inserisci il nuovo nome");
+            string risposta=Console.ReadLine();
+            listaPartecipanti[numeroPartecipante-1].nome=risposta;
+        }
+        else if(scelta=="2")
+        {
+            Console.WriteLine("Inserisci la nuova età");
+            string risposta=Console.ReadLine();
+            listaPartecipanti[numeroPartecipante-1].eta=int.Parse(risposta);
+        }
+        else if(scelta=="3")
+        {
+            Console.WriteLine("Inserisci la nuova presenza (true/false)");
+            string risposta=Console.ReadLine();
+            listaPartecipanti[numeroPartecipante-1].presente=bool.Parse(risposta);
+        }
+        else if(scelta=="4")
+        {
+            Console.WriteLine("Inserisci i nuovi interessi separati da virgola");
+            string risposta=Console.ReadLine();
+            List<string> interessiModificati=new List<string>();
+            string[] interessiArray=risposta.Split(",");
+            foreach(string s in interessiArray)
+            {
+                interessiModificati.Add(s.Trim());
+            }
+            
+            //Quando assegnamo un array ad un JsonObject dobbiamo per forza fare il cast da array a JArray
+            listaPartecipanti[numeroPartecipante-1].interessi=JArray.FromObject(interessiModificati);
+            Console.WriteLine($"nome: {listaPartecipanti[numeroPartecipante-1].nome.GetType()}\neta: {listaPartecipanti[numeroPartecipante-1].eta.GetType()}\npresente: {listaPartecipanti[numeroPartecipante-1].presente.GetType()}\n interessi: {listaPartecipanti[numeroPartecipante-1].interessi.GetType()}");
+        }
+        else
+            break;
+        string serialized=JsonConvert.SerializeObject(listaPartecipanti,Formatting.Indented);
+        if(File.Exists("partecipanti.json"))
+        {
+            File.WriteAllText("partecipanti.json",serialized);
+            Console.WriteLine("Modifica scritta con successo");
+        }
+        else
+            Console.WriteLine("impossibile aggiornare partecipanti.json, il file non esiste");
+
+    }
+}
+void StampaPartecipanti()
+{
+    string contenutoFile=File.ReadAllText("partecipanti.json");
+    var listaPartecipanti=JsonConvert.DeserializeObject<dynamic>(contenutoFile);
+    Console.WriteLine("Stampa lista dei partecipanti");
+    int index=1;
+    foreach(var p in listaPartecipanti)
+    {
+        //Console.WriteLine($"aa {listaPartecipanti}");
+        Console.WriteLine($"{index}:\t{p.nome}\t{p.eta}\t{p.presente}\t{string.Join(",",p.interessi)}");
+        index++;
+    }
+}
+
+void ScriviPartecipante(dynamic partecipante)
+{
+    string contenutoFile=File.ReadAllText("partecipanti.json");
+    var listaPartecipanti=JsonConvert.DeserializeObject<dynamic>(contenutoFile);
+    Console.WriteLine($"ScriviPartecipante contenuto file\n{contenutoFile}");
+    Console.WriteLine("Stampa partecipanti");
+    
+    List<dynamic> lista=new List<dynamic>();
+    foreach(var p in listaPartecipanti)
+    {
+        //Console.WriteLine($"aa {listaPartecipanti}");
+        //Console.WriteLine($"{p.nome} {p.eta} {p.presenza}");
+        lista.Add(p);
         
     }
-
-}
-
-string CreaPartecipanteFileName(int id)
-{
-    return $"{id}.json";
-}
-
-void ScriviLastId(int newId)
-{
-    var jsonId=new
+    lista.Add(partecipante);
+    int lastId=partecipante.id;
+    string serialized=JsonConvert.SerializeObject(lista,Formatting.Indented);
+    Console.WriteLine($"Stampa stringa json di tutti i partecipanti\n{serialized}");
+    if(File.Exists("partecipanti.json"))
     {
-        id=newId
-    };
-    string serialized=JsonConvert.SerializeObject(jsonId);
-    File.WriteAllText("lastId.json",serialized);
-}
-
-void ScriviPartecipante(string nomePartecipante, int id)
-{
-    var singoloPartecipante=new
-    {
-        nome=nomePartecipante,
-        id=id
-    };
-
-    string serialized=JsonConvert.SerializeObject(singoloPartecipante,Formatting.Indented);
-    string partecipanteFileName=CreaPartecipanteFileName(id);
-    if(!File.Exists(partecipanteFileName))
-    {
-        File.WriteAllText(partecipanteFileName,serialized);
-        Console.WriteLine($"File {partecipanteFileName} scritto.");
+        File.WriteAllText("partecipanti.json",serialized);
+        ScriviId(lastId);
+        Console.WriteLine("File partecipanti.json aggiornato con successo");
     }
     else
-        Console.WriteLine($"Errore, il file {partecipanteFileName} esiste già");
+    {
+        Console.WriteLine("impossibile aggiornare partecipanti.json, il file non esiste");
+    }
 
+}
 
+int LeggiLastId()
+{
+    string testoFile=File.ReadAllText("lastId.json");
+    var jsonVar=JsonConvert.DeserializeObject<dynamic>(testoFile);
+    Console.WriteLine($"Id letto da file: {jsonVar.id}");
+    return jsonVar.id;
+}
+
+void ScriviId(int nuovoId)
+{
+    var v=new
+    {
+        id=nuovoId
+    };
     
-    Console.WriteLine($"singoloPartecipante serialized{serialized}");
-
+    string s=JsonConvert.SerializeObject(v,Formatting.Indented);
+    File.WriteAllText("lastId.json",s);
 }
 
-
-int LeggiUltimoId(string path)
+dynamic LeggiPartecipante()
 {
-    string contenutoFile=File.ReadAllText(path);
-    var contenutoJson=JsonConvert.DeserializeObject<dynamic>(contenutoFile);
-    Console.WriteLine($"VALORE LeggiUltimoId: {contenutoFile}");
-    return contenutoJson.id;
+    Console.WriteLine("Inserisci il nome");
+    string nome=Console.ReadLine();
+
+    Console.WriteLine("Inserisci l'età");
+    string eta=Console.ReadLine();
+
+    Console.WriteLine("Inserisci la presenza (true/false)");
+    bool presenzaResult=false;
+    bool presenza=false;
+    while(!presenzaResult)
+    {
+        presenzaResult=bool.TryParse(Console.ReadLine(), out bool p);
+        if(!presenzaResult)
+            Console.WriteLine("Attenzione, presenza inserita non valida");
+        presenza=p;
+    }
+
+    Console.WriteLine("Inserisci gli interessi separati da virgola");
+    string interessi=Console.ReadLine();
+    string[] interessiArray=interessi.Split(",");
+    for(int i=0;i<interessiArray.Length;i++)
+        interessiArray[i]=interessiArray[i].Trim();
+
+    return new
+    {
+        id=LeggiLastId()+1,
+        nome=nome,
+        eta=eta,
+        presente=presenza,
+        interessi=interessiArray
+    };
+
 }
 
-public class Partecipante
-{
-    public string nome { get; set; }
-    public int eta { get; set; }
-    public bool presente { get; set; }
-}
-
-public class Main
-{
-
-}
 
 
 /*
-
 Programma che usa un file json come metodo di persistenza dell'id dell' ultimo partecipante creato, 
 in modo da poterlo incrementare ad ogni creazione di un nuovo partecipante.
 Creare un file chiamato lastId.json con il seguente contenuto
