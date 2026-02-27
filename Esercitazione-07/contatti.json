@@ -1,0 +1,62 @@
+[
+  {
+    "Id": 1,
+    "Nome": "Nome contatto",
+    "Cognome": "Cognome contatto",
+    "Email": "test@tin.it",
+    "Telefono": "123456789",
+    "Presente": true,
+    "Interessi": [
+      "Interesse 1",
+      "Interesse 2",
+      "Interesse 3"
+    ]
+  },
+  {
+    "Id": 2,
+    "Nome": "f",
+    "Cognome": "f",
+    "Email": "f",
+    "Telefono": "f",
+    "Presente": true,
+    "Interessi": [
+      ""
+    ]
+  },
+  {
+    "Id": 3,
+    "Nome": "test",
+    "Cognome": "test",
+    "Email": "test",
+    "Telefono": "55",
+    "Presente": true,
+    "Interessi": [
+      "s",
+      "b"
+    ]
+  },
+  {
+    "Id": 4,
+    "Nome": "m",
+    "Cognome": "m",
+    "Email": "m",
+    "Telefono": "5",
+    "Presente": true,
+    "Interessi": [
+      "a",
+      "b"
+    ]
+  },
+  {
+    "Id": 5,
+    "Nome": "test2",
+    "Cognome": "test2",
+    "Email": "mail@tin.it",
+    "Telefono": "66",
+    "Presente": true,
+    "Interessi": [
+      "aa",
+      "bb"
+    ]
+  }
+]
