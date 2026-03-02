@@ -3,44 +3,133 @@ using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-string path=@"contatti.json";
+string contattiPath=@"contatti.json";
 string lastIdPath=@"lastId.json";
 string risposta;
 
 while(true)
 {
-    Console.WriteLine("Premi 1 per leggere i contatti\nPremi 2 per aggiungere un contatto\nPremi 3 per eliminare un contatto");
+    Console.WriteLine("Premi 1 per leggere i contatti\nPremi 2 per aggiungere un contatto\nPremi 3 per modificare un contatto\nPremi 4 per eliminare un contatto");
     risposta=Console.ReadLine();
     if(risposta=="1")
     {
-        List<Contatto> contatti=LeggiFileContatti(path);
+        List<Contatto> contatti=LeggiFileContatti(contattiPath);
         StampaContatti(contatti);
     }
     else if(risposta=="2")
     {
         int nuovoId=LeggiId(lastIdPath)+1;
-        Contatto contatto=LeggiNuovoContatto(nuovoId);
+        if(nuovoId>0)
+        {
+            Contatto contatto=LeggiNuovoContatto(nuovoId);
 
-        List<Contatto> contatti=LeggiFileContatti(path);
-        contatti.Add(contatto);
-        ScriviFileContatti(path,contatti);
+            List<Contatto> contatti=LeggiFileContatti(contattiPath);
+            contatti.Add(contatto);
+            ScriviFileContatti(contattiPath,contatti);
 
-        AggiornaId(lastIdPath,nuovoId);
-        StampaContatti(contatti);
+            AggiornaId(lastIdPath,nuovoId);
+            StampaContatti(contatti);
+        }
     }
     else if(risposta=="3")
     {
-        List<Contatto> contatti=LeggiFileContatti(path);
+        ModificaContatto(contattiPath);
+    }
+    else if(risposta=="4")
+    {
+        List<Contatto> contatti=LeggiFileContatti(contattiPath);
         StampaContatti(contatti);
         Console.WriteLine("Inserisci l'id del contatto da eliminare");
         int idDaEliminare=int.Parse(Console.ReadLine());
-        EliminaContattoById(path,idDaEliminare);
+        EliminaContattoById(contattiPath,idDaEliminare);
     }
     else
         break;
 
 
+}
 
+void ModificaContatto(string filePath)
+{
+    while(true)
+    {
+        bool contattoModificato=false;
+        List<Contatto> contatti=LeggiFileContatti(contattiPath);
+        StampaContatti(contatti);
+        Console.WriteLine("Inserisci l' ID del contatto da modificare");
+        int idContattoDaModificare=int.Parse(Console.ReadLine());
+        Contatto contatto=trovaContattoById(idContattoDaModificare,contatti);
+        if(contatto!=null) //se è stato trovato un contatto per l' id idContattoDaModificare
+        {
+            Console.WriteLine("Premi 1 per modificare il nome\nPremi 2 per modificare il cognome\nPremi 3 per modificare la mail\nPremi 4 per modificare il telefono\nPremi 5 per modificare la presenza\nPremi 6 per modificare gli interessi\nPremi 0 per uscire");
+            string risposta=Console.ReadLine();
+
+            if(risposta=="1")
+            {
+                Console.WriteLine("Inserisci il nome");
+                string input=Console.ReadLine();
+                contatto.Nome=input;
+                contattoModificato=true;
+            }
+            else if(risposta=="2")
+            {
+                Console.WriteLine("Inserisci il cognome");
+                string input=Console.ReadLine();
+                contatto.Cognome=input;
+                contattoModificato=true;
+            }
+            else if(risposta=="3")
+            {
+                Console.WriteLine("Inserisci la mail");
+                string input=Console.ReadLine();
+                contatto.Email=input;
+                contattoModificato=true;
+            }
+            else if(risposta=="4")
+            {
+                Console.WriteLine("Inserisci il telefono");
+                string input=Console.ReadLine();
+                contatto.Telefono=input;
+                contattoModificato=true;
+            }
+            else if(risposta=="5")
+            {
+                Console.WriteLine("Inserisci la presenza (true/false)");
+                string input=Console.ReadLine();
+                bool presenza=bool.Parse(input);
+                contatto.Presente=presenza;
+                contattoModificato=true;
+            }
+            else if(risposta=="6")
+            {
+                Console.WriteLine("Inserisci gli interessi separati da virgola");
+                string input=Console.ReadLine();
+                contatto.Interessi=input.Split(",").ToList();
+                contattoModificato=true;
+            }
+            else if(risposta=="0")
+            {
+                break;
+            }
+            else
+                Console.WriteLine("Risposta non valida, riprova");
+        }
+        else
+            Console.WriteLine($"Impossibile trovare il contatto con id {idContattoDaModificare}");
+        if(contattoModificato)
+        {
+            ScriviFileContatti(filePath,contatti);
+            break;
+        }
+    }
+}
+
+Contatto trovaContattoById(int id, List<Contatto> contatti)
+{
+    foreach(Contatto contatto in contatti)
+        if(contatto.Id==id)
+            return contatto;
+    return null;
 }
 
 Contatto LeggiNuovoContatto(int id)
@@ -110,7 +199,10 @@ void EliminaContattoById(string filePath, int id)
     {
         Contatto contatto=contatti.ElementAt(i);
         if(contatto.Id==id)
+        {
             indexToRemove=i;
+            break;
+        }
     }
     if(indexToRemove<0)
     {
@@ -126,9 +218,17 @@ void EliminaContattoById(string filePath, int id)
 
 int LeggiId(string filePath)
 {
-    string jsonText=File.ReadAllText(filePath);
-    Identificatore identificatore=JsonConvert.DeserializeObject<Identificatore>(jsonText);
-    return identificatore.Id;
+    if(File.Exists(filePath))
+    {
+        string jsonText=File.ReadAllText(filePath);
+        Identificatore identificatore=JsonConvert.DeserializeObject<Identificatore>(jsonText);
+        return identificatore.Id;
+    }
+    else
+    {
+        Console.WriteLine($"Impossibile trovare il file {filePath}");
+        return -1;
+    }
 }
 
 int AggiornaId(string filePath, int nuovoId)

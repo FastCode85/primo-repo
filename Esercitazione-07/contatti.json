@@ -37,14 +37,13 @@
   },
   {
     "Id": 4,
-    "Nome": "m",
-    "Cognome": "m",
-    "Email": "m",
-    "Telefono": "5",
-    "Presente": true,
+    "Nome": "aaa",
+    "Cognome": "aaa",
+    "Email": "aaa@mail.it",
+    "Telefono": "123",
+    "Presente": false,
     "Interessi": [
-      "a",
-      "b"
+      ""
     ]
   },
   {
@@ -57,6 +56,29 @@
     "Interessi": [
       "aa",
       "bb"
+    ]
+  },
+  {
+    "Id": 6,
+    "Nome": "mmm",
+    "Cognome": "fff",
+    "Email": "ff@ff.it",
+    "Telefono": "3456",
+    "Presente": false,
+    "Interessi": [
+      "y",
+      "b"
+    ]
+  },
+  {
+    "Id": 7,
+    "Nome": "marco",
+    "Cognome": "pari",
+    "Email": "mail@tin.it",
+    "Telefono": "123",
+    "Presente": false,
+    "Interessi": [
+      "lettura"
     ]
   }
 ]
