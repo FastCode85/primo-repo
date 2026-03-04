@@ -80,5 +80,110 @@
     "Interessi": [
       "lettura"
     ]
+  },
+  {
+    "Id": 21,
+    "Nome": "rr",
+    "Cognome": "rr",
+    "Email": "rr",
+    "Telefono": "55",
+    "Presente": false,
+    "Interessi": [
+      "test1",
+      "test2"
+    ]
+  },
+  {
+    "Id": 22,
+    "Nome": "sfg",
+    "Cognome": "sg",
+    "Email": "s",
+    "Telefono": "34",
+    "Presente": false,
+    "Interessi": [
+      ""
+    ]
+  },
+  {
+    "Id": -5,
+    "Nome": "jj",
+    "Cognome": "jj",
+    "Email": null,
+    "Telefono": "jj",
+    "Presente": false,
+    "Interessi": [
+      ""
+    ]
+  },
+  {
+    "Id": -5,
+    "Nome": "gg",
+    "Cognome": "gg",
+    "Email": null,
+    "Telefono": "55",
+    "Presente": false,
+    "Interessi": [
+      "g.g"
+    ]
+  },
+  {
+    "Id": -5,
+    "Nome": "uu",
+    "Cognome": "uu",
+    "Email": null,
+    "Telefono": "uu",
+    "Presente": false,
+    "Interessi": [
+      "h",
+      "h"
+    ]
+  },
+  {
+    "Id": -5,
+    "Nome": "jj",
+    "Cognome": "jj",
+    "Email": null,
+    "Telefono": "jj",
+    "Presente": false,
+    "Interessi": [
+      "h",
+      "h"
+    ]
+  },
+  {
+    "Id": -5,
+    "Nome": "uu",
+    "Cognome": "uu",
+    "Email": null,
+    "Telefono": "uu",
+    "Presente": false,
+    "Interessi": [
+      "t",
+      "t"
+    ]
+  },
+  {
+    "Id": -5,
+    "Nome": "t",
+    "Cognome": "t",
+    "Email": null,
+    "Telefono": "t",
+    "Presente": false,
+    "Interessi": [
+      "y",
+      "y"
+    ]
+  },
+  {
+    "Id": -5,
+    "Nome": "uuu",
+    "Cognome": "uuu",
+    "Email": null,
+    "Telefono": "555",
+    "Presente": false,
+    "Interessi": [
+      "y",
+      "y"
+    ]
   }
 ]
