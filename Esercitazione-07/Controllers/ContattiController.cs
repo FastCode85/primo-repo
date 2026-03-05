@@ -60,7 +60,7 @@ public class ContattiController
             Validator.ValidateObject(nuovoContatto, context, true);
             contatti.Add(nuovoContatto);
             Salva();
-            Console.WriteLine($"Validazione GetNextId(), valore di ID: {nuovoContatto.Id}");
+            Console.WriteLine($"Validazione AggiungiContatto(), valore di ID: {nuovoContatto.Id}");
             
         }
         catch (ValidationException ex)

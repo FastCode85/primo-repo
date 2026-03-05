@@ -105,57 +105,46 @@
     ]
   },
   {
-    "Id": -5,
-    "Nome": "jj",
-    "Cognome": "jj",
+    "Id": 23,
+    "Nome": "pippo",
+    "Cognome": "santi",
     "Email": null,
-    "Telefono": "jj",
+    "Telefono": "4444",
     "Presente": false,
     "Interessi": [
-      ""
+      "inte"
     ]
   },
   {
-    "Id": -5,
-    "Nome": "gg",
-    "Cognome": "gg",
+    "Id": 24,
+    "Nome": "tt",
+    "Cognome": "tt",
+    "Email": null,
+    "Telefono": "435",
+    "Presente": false,
+    "Interessi": [
+      "y",
+      "y"
+    ]
+  },
+  {
+    "Id": 25,
+    "Nome": "ee",
+    "Cognome": "ee",
+    "Email": null,
+    "Telefono": "555",
+    "Presente": false,
+    "Interessi": [
+      "t",
+      "r"
+    ]
+  },
+  {
+    "Id": 28,
+    "Nome": "ttt",
+    "Cognome": "ttt",
     "Email": null,
     "Telefono": "55",
-    "Presente": false,
-    "Interessi": [
-      "g.g"
-    ]
-  },
-  {
-    "Id": -5,
-    "Nome": "uu",
-    "Cognome": "uu",
-    "Email": null,
-    "Telefono": "uu",
-    "Presente": false,
-    "Interessi": [
-      "h",
-      "h"
-    ]
-  },
-  {
-    "Id": -5,
-    "Nome": "jj",
-    "Cognome": "jj",
-    "Email": null,
-    "Telefono": "jj",
-    "Presente": false,
-    "Interessi": [
-      "h",
-      "h"
-    ]
-  },
-  {
-    "Id": -5,
-    "Nome": "uu",
-    "Cognome": "uu",
-    "Email": null,
-    "Telefono": "uu",
     "Presente": false,
     "Interessi": [
       "t",
@@ -163,27 +152,14 @@
     ]
   },
   {
-    "Id": -5,
-    "Nome": "t",
-    "Cognome": "t",
-    "Email": null,
-    "Telefono": "t",
-    "Presente": false,
-    "Interessi": [
-      "y",
-      "y"
-    ]
-  },
-  {
-    "Id": -5,
-    "Nome": "uuu",
-    "Cognome": "uuu",
+    "Id": 30,
+    "Nome": "ggg",
+    "Cognome": "ggg",
     "Email": null,
     "Telefono": "555",
     "Presente": false,
     "Interessi": [
-      "y",
-      "y"
+      ""
     ]
   }
 ]

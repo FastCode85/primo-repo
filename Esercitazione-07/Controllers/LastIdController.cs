@@ -29,7 +29,6 @@ public class LastIdController
     public int GetNextId()
     {
         lastId.Id++;
-        lastId.Id=-5;
         var context = new ValidationContext(lastId);
         try
         {
