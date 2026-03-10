@@ -1,0 +1,6 @@
+@Rubrica.Api_HostAddress = http://localhost:5032
+
+GET {{Rubrica.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

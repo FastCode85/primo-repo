@@ -88,7 +88,20 @@ public class ContattiController
             contattoEsistente.Telefono = telefono;
             contattoEsistente.Presente = presente;
             contattoEsistente.Interessi = interessi;
-            Salva();
+            
+            var context = new ValidationContext(contattoEsistente);
+            try 
+            {
+                // validate object restituisce un'eccezione se l'oggetto non è valido, altrimenti non restituisce nulla
+                Validator.ValidateObject(contattoEsistente, context, true);
+                Salva();
+                Console.WriteLine($"Validazione ModificaContatto(), valore di ID: {contattoEsistente.Id}");
+                
+            }
+            catch (ValidationException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 
