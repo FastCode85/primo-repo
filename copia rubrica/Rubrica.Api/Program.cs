@@ -18,11 +18,8 @@ builder.Services.AddControllers();
 // Configura EF Core con SQLite
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
-           .LogTo(Console.WriteLine, LogLevel.Information)
-           .EnableSensitiveDataLogging();
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
 
 // Configura Identity per gli utenti
 builder.Services.AddIdentityCore<ApplicationUser>(options =>
@@ -77,8 +74,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-
-
 // Registrazione servizi custom
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<InterestService>();
@@ -95,10 +90,15 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-
+// Applica automaticamente le migration all'avvio
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
 
 // Richiama il seed iniziale con alcuni utenti demo e i loro interessi.
 // Se i dati esistono già, non vengono duplicati.
-///await DataSeeder.SeedAsync(app.Services);
+//await DataSeeder.SeedAsync(app.Services);
 
 app.Run();

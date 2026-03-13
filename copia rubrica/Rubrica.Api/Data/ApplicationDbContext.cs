@@ -11,7 +11,7 @@ public class ApplicationDbContext : IdentityUserContext<ApplicationUser>
     //e in più aggiunge la tabella Interests
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
-        
+
     }
 
     public DbSet<Interest> Interests {get;set;}
