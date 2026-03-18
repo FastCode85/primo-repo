@@ -1,3 +1,6 @@
+
+
+using Microsoft.EntityFrameworkCore;
 using Rubrica.Api.Data;
 using Rubrica.Api.Dtos;
 using Rubrica.Api.Models;
@@ -18,7 +21,8 @@ public class InterestService
         List<InterestDto> result=new List<InterestDto>();
 
         //prendiamo tutti gli interessi dal database
-        List<Interest> allInterests=_context.Interests.ToList();
+        //List<Interest> allInterests=_context.Interests.ToList();
+        List<Interest> allInterests=_context.Interests.ToListAsync().Result;
 
         //filtriamo a mano solo quelli dell'utente loggato
         for(int i=0;i<allInterests.Count;i++)
@@ -73,6 +77,7 @@ public class InterestService
         interest.Nome=dto.Nome;
         interest.UserId=userId;
 
+
         _context.Interests.Add(interest);
         await _context.SaveChangesAsync();
 
@@ -89,16 +94,32 @@ public class InterestService
 
         if(interest==null)
         {
+            Console.WriteLine("Interesse non trovato");
             return null;
         }
 
         if(interest.UserId!=userId)
         {
+            Console.WriteLine("interest.UserId!=userId");
+            return null;
+        }
+
+        if(interest.Nome==dto.Nome)
+        {
+            Console.WriteLine($"interest.Nome==dto.Nome {interest.Nome}|{dto.Nome}");
             return null;
         }
 
         interest.Nome=dto.Nome;
+        
+        /*
+            Da guardare, da provare. Effettua l'update dell' oggetto sul DBSET degli interessi nel dbcontext
+            _context.Interests.Update(interest);
 
+
+        */
+        //Aggiorniamo l'interesse se tutte le verifiche passano.
+        //_context.Interests.Update(interest);
         await _context.SaveChangesAsync();
 
         InterestDto result=new InterestDto();
@@ -123,7 +144,9 @@ public class InterestService
         }
 
         _context.Interests.Remove(interest);
+        
         await _context.SaveChangesAsync();
+        
 
         return true;
 

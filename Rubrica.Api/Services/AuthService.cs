@@ -1,3 +1,7 @@
+/*
+    Gestisce
+*/
+
 using Microsoft.AspNetCore.Identity;
 using Rubrica.Api.Dtos;
 using Rubrica.Api.Helpers;
@@ -7,12 +11,14 @@ namespace Rubrica.Api.Services;
 
 public class AuthService
 {
+    //è una classe fornita da ASP.NET Idetity che serve per gestire gli utenti
     private readonly UserManager<ApplicationUser> _userManager;
+    //è una classe che si occupa della gestione dell'autenticazione, fornita da ASP.NET Identity
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly JwtHelper _jwtHelper;
 
     public AuthService(
-        UserManager<ApplicationUser> userManager,
+        UserManager<ApplicationUser> userManager,//dependency injection
         SignInManager<ApplicationUser> signInManager,
         JwtHelper jwtHelper
         )
@@ -57,6 +63,7 @@ public class AuthService
         user.CreatedAt=DateTime.UtcNow;
 
         //Identity salva l'utente e crea l'hash sicuro della password
+        //conferma anche l'operazione sul database
         IdentityResult result=await _userManager.CreateAsync(user,dto.Password);
         return result;
     }
@@ -89,4 +96,73 @@ public class AuthService
 
         return response;
     }
+
+    public async Task<AuthResponseDto> UpdateAsync(UpdateUserDto dto, string userId)
+    {
+        //trova l'utente by id
+        ApplicationUser user=await _userManager.FindByIdAsync(userId);
+
+        //se utente non trovato esce con errore
+        if(user==null)
+        {
+            //errore
+            return null;
+        }
+
+        //update dell'utente trovato con i nuovi dati ricevuti dal DTO
+        user.NomeCompleto=dto.NomeCompleto;
+        user.PhoneNumber=dto.PhoneNumber;
+
+        //effettua l'update dell'utente
+        IdentityResult identityResult = await _userManager.UpdateAsync(user);
+
+        //gestisce il caso in cui l'upodate non vada a buon fine
+        if(!identityResult.Succeeded)
+        {
+            //errore
+            return null;
+        }
+
+        AuthResponseDto authResponseDto=new AuthResponseDto();
+        authResponseDto.Email=user.Email;
+        authResponseDto.UserId=user.Id;
+        authResponseDto.NomeCompleto=user.NomeCompleto;
+        
+        return authResponseDto;
+
+    }
+
+    public async Task<GetUserDto> GetByIdAsync(string userId)
+    {
+        ApplicationUser user=await _userManager.FindByIdAsync(userId);
+        if(user==null)
+        {
+            return null;
+        }
+        GetUserDto getUserDto=new GetUserDto();
+        getUserDto.Email=user.Email;
+        getUserDto.Id=user.Id;
+        getUserDto.NomeCompleto=user.NomeCompleto;
+        getUserDto.PhoneNumber=user.PhoneNumber;
+        getUserDto.CreatedAt=user.CreatedAt;
+        return getUserDto;
+    }
+
+    public async Task<IdentityResult>DeleteByIdAsync(string userId)
+    {
+        ApplicationUser user=await _userManager.FindByIdAsync(userId);
+        if(user==null)
+        {
+            IdentityError error=new IdentityError();
+            error.Description="Utente non trovato.";
+            
+            List<IdentityError> errors=new List<IdentityError>();
+            errors.Add(error);
+
+            return IdentityResult.Failed(errors.ToArray());
+        }
+        IdentityResult result=await _userManager.DeleteAsync(user);
+        return result;
+    }
+
 }

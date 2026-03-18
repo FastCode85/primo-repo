@@ -436,3 +436,73 @@ public static class DataSeeder
 }
 
 ```
+
+## COMANDI CURL
+
+Richiede un nuovo token JWT e lo salva nella variabile $TOKEN del terminale
+```Bash
+TOKEN=$(curl -s -X POST "http://localhost:5032/api/Auth/login" \
+-H "Content-Type: application/json" \
+-d '{"email":"utente1@email.com","password":"123456"}' | jq -r '.token')
+```
+
+-H è un header indica che stiamo inviando i dati in formato Json
+-d contiene i dati, in questo caso l'email e la password dell'utente che vogliamo loggare
+
+
+LETTURA INTERESSI
+```Bash
+curl -X GET "http://localhost:5032/api/Interests" \
+-H "Authorization: Bearer $TOKEN"
+```
+
+
+CREARE INTERESSE
+```Bash
+curl -X POST "http://localhost:5032/api/Interests" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer $TOKEN" \
+-d '{"nome":"Pallavolo"}'
+```
+
+MODIFICA INTERESSE
+```Bash
+curl -X PUT "http://localhost:5032/api/Interests/1" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer $TOKEN" \
+-d '{"nome":"Nuovo"}'
+```
+
+CANCELLA INTERESSE
+```Bash
+curl -X DELETE "http://localhost:5032/api/Interests/1" \
+-H "Authorization: Bearer $TOKEN" 
+```
+
+CREA UTENTE
+```Bash
+curl -s -X POST "http://localhost:5032/api/Auth/register" \
+-H "Content-Type: application/json" \
+-d '{"email":"marco@email.com","password":"123456","nomecompleto":"marco","phonenumber":"111111"}'
+```
+
+MODIFCA UTENTE
+```Bash
+curl -X PUT "http://localhost:5032/api/Auth/update" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer $TOKEN" \
+-d '{"nomecompleto":"marco","phonenumber":"111111"}'
+```
+
+LETTURA UTENTE
+```Bash
+curl -X GET "http://localhost:5032/api/Auth/profile" \
+-H "Authorization: Bearer $TOKEN" 
+```
+
+CANCELLAZIONE UTENTE
+```Bash
+curl -X DELETE "http://localhost:5032/api/Auth/delete" \
+-H "Authorization: Bearer $TOKEN" 
+```
+

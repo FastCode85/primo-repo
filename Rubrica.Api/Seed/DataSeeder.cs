@@ -11,48 +11,53 @@ public static class DataSeeder
     // se i dati esistono già, non li duplica.
     public static async Task SeedAsync(IServiceProvider serviceProvider)
     {
+        /*
+            Creiamo uno scope per ottenere i servizi necessari.
+            Garantisce che questi servizi iano rilasciati completamente.
+        */
         using IServiceScope scope = serviceProvider.CreateScope();
+        {
+            ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            UserManager<ApplicationUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-        ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        UserManager<ApplicationUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            // Creiamo il database se non esiste ancora
+            await context.Database.EnsureCreatedAsync();
 
-        // Creiamo il database se non esiste ancora
-        await context.Database.EnsureCreatedAsync();
+            // Creiamo alcuni utenti demo
+            ApplicationUser utente1 = await CreateUserIfNotExistsAsync(
+                userManager,
+                "utente1@email.com",
+                "123456",
+                "Utente uno",
+                "3331234567");
 
-        // Creiamo alcuni utenti demo
-        ApplicationUser utente1 = await CreateUserIfNotExistsAsync(
-            userManager,
-            "utente1@email.com",
-            "123456",
-            "Utente uno",
-            "3331234567");
+            ApplicationUser utente2 = await CreateUserIfNotExistsAsync(
+                userManager,
+                "utente2@email.com",
+                "123456",
+                "Utente due",
+                "3337654321");
 
-        ApplicationUser utente2 = await CreateUserIfNotExistsAsync(
-            userManager,
-            "utente2@email.com",
-            "123456",
-            "Utente due",
-            "3337654321");
+            ApplicationUser utente3 = await CreateUserIfNotExistsAsync(
+                userManager,
+                "utente3@email.com",
+                "123456",
+                "Utente tre",
+                "3331112222");
 
-        ApplicationUser utente3 = await CreateUserIfNotExistsAsync(
-            userManager,
-            "utente3@email.com",
-            "123456",
-            "Utente tre",
-            "3331112222");
+            // Creiamo alcuni interessi per ogni utente
+            await CreateInterestIfNotExistsAsync(context, utente1.Id, "Calcio");
+            await CreateInterestIfNotExistsAsync(context, utente1.Id, "CSharp");
+            await CreateInterestIfNotExistsAsync(context, utente1.Id, "Cinema");
 
-        // Creiamo alcuni interessi per ogni utente
-        await CreateInterestIfNotExistsAsync(context, utente1.Id, "Calcio");
-        await CreateInterestIfNotExistsAsync(context, utente1.Id, "CSharp");
-        await CreateInterestIfNotExistsAsync(context, utente1.Id, "Cinema");
+            await CreateInterestIfNotExistsAsync(context, utente2.Id, "Nuoto");
+            await CreateInterestIfNotExistsAsync(context, utente2.Id, "Angular");
+            await CreateInterestIfNotExistsAsync(context, utente2.Id, "Musica");
 
-        await CreateInterestIfNotExistsAsync(context, utente2.Id, "Nuoto");
-        await CreateInterestIfNotExistsAsync(context, utente2.Id, "Angular");
-        await CreateInterestIfNotExistsAsync(context, utente2.Id, "Musica");
-
-        await CreateInterestIfNotExistsAsync(context, utente3.Id, "Lettura");
-        await CreateInterestIfNotExistsAsync(context, utente3.Id, "Viaggi");
-        await CreateInterestIfNotExistsAsync(context, utente3.Id, "Fotografia");
+            await CreateInterestIfNotExistsAsync(context, utente3.Id, "Lettura");
+            await CreateInterestIfNotExistsAsync(context, utente3.Id, "Viaggi");
+            await CreateInterestIfNotExistsAsync(context, utente3.Id, "Fotografia");
+        }
     }
 
     private static async Task<ApplicationUser> CreateUserIfNotExistsAsync(
@@ -64,6 +69,7 @@ public static class DataSeeder
     {
         // Controlliamo se l'utente esiste già tramite email
         ApplicationUser? existingUser = await userManager.FindByEmailAsync(email);
+        
 
         if (existingUser != null)
         {

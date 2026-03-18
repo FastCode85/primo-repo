@@ -7,10 +7,11 @@ using Rubrica.Api.Services;
 namespace Rubrica.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]")] //percorso dell'API
 [Authorize]
 public class InterestsController : ControllerBase
 {
+    //servizio privato degli interessi per interazione con il DB
     private readonly InterestService _interestService;
 
     public InterestsController(InterestService interestService)
@@ -18,7 +19,7 @@ public class InterestsController : ControllerBase
         _interestService = interestService;
     }
 
-    [HttpGet]
+    [HttpGet] //metodo per la richiesta http
     public async Task<IActionResult> GetAll()
     {
         string userId = GetUserIdFromToken();

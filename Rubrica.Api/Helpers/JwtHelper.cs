@@ -1,3 +1,10 @@
+/*
+
+    Questa classe si occupa di generare i token JWT per l'autenticazione degli utenti.
+    Utilizza i dati di configurazione presenti in appsettings.json per creare il token.
+
+*/
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -7,6 +14,9 @@ using Rubrica.Api.Models;
 namespace Rubrica.Api.Helpers;
 public class JwtHelper
 {
+    /*
+        Viene usato per accedere ai dati di configurazione JWT in appsettings.json
+    */
     private readonly IConfiguration _configuration;
 
     public JwtHelper(IConfiguration configuration)
@@ -25,7 +35,7 @@ public class JwtHelper
         {
             throw new Exception("Configurazione JWT mancante.");
         }
-
+        
         Claim[] claims = new Claim[]
         {
             new Claim(ClaimTypes.NameIdentifier,user.Id),
@@ -37,8 +47,8 @@ public class JwtHelper
         SigningCredentials credentials=new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
 
         JwtSecurityToken token = new JwtSecurityToken(
-            issuer : issuer,
-            audience : audience,
+            issuer : issuer,  //chi ha creato il token
+            audience : audience,  //chi può usare il token
             claims : claims,
             expires : DateTime.UtcNow.AddHours(1),
             signingCredentials : credentials

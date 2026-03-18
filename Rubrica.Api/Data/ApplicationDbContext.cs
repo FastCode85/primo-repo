@@ -5,6 +5,7 @@ using Rubrica.Api.Models;
 
 namespace Rubrica.Api.Data;
 
+
 public class ApplicationDbContext : IdentityUserContext<ApplicationUser>
 {
     //Questo DbContext usa Identity solo per gli utenti

@@ -99,6 +99,6 @@ app.MapControllers();
 
 // Richiama il seed iniziale con alcuni utenti demo e i loro interessi.
 // Se i dati esistono già, non vengono duplicati.
-///await DataSeeder.SeedAsync(app.Services);
+await DataSeeder.SeedAsync(app.Services);
 
 app.Run();
