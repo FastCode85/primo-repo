@@ -15,5 +15,7 @@ public class ApplicationUser : IdentityUser
     public string NomeCompleto {get;set;} = string.Empty;
     public DateTime CreatedAt {get;set;} = DateTime.UtcNow;
     public List<Interest> Interests {get;set;} = new List<Interest>();
+    public bool NumeroInternazionale {get;set;} =false;
+    public DateTime DataNascita {get;set;} =DateTime.UtcNow;
 
 }

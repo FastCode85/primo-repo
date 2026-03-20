@@ -93,6 +93,8 @@ public class AuthService
         response.UserId=user.Id;
         response.Email=user.Email ?? "";
         response.NomeCompleto=user.NomeCompleto;
+        response.NumeroInternazionale=user.NumeroInternazionale;
+        response.DataNascita=user.DataNascita;
 
         return response;
     }
@@ -112,6 +114,8 @@ public class AuthService
         //update dell'utente trovato con i nuovi dati ricevuti dal DTO
         user.NomeCompleto=dto.NomeCompleto;
         user.PhoneNumber=dto.PhoneNumber;
+        user.NumeroInternazionale=dto.NumeroInternazionale;
+        user.DataNascita=dto.DataNascita;
 
         //effettua l'update dell'utente
         IdentityResult identityResult = await _userManager.UpdateAsync(user);

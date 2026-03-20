@@ -21,7 +21,7 @@ public static class DataSeeder
             UserManager<ApplicationUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             // Creiamo il database se non esiste ancora
-            await context.Database.EnsureCreatedAsync();
+            //await context.Database.EnsureCreatedAsync();
 
             // Creiamo alcuni utenti demo
             ApplicationUser utente1 = await CreateUserIfNotExistsAsync(
@@ -29,21 +29,26 @@ public static class DataSeeder
                 "utente1@email.com",
                 "123456",
                 "Utente uno",
-                "3331234567");
+                "3331234567",
+                false,
+                new DateTime(1990,10,10));
 
             ApplicationUser utente2 = await CreateUserIfNotExistsAsync(
                 userManager,
                 "utente2@email.com",
                 "123456",
                 "Utente due",
-                "3337654321");
+                "3337654321",
+                false,
+                new DateTime(1991,10,10));
 
             ApplicationUser utente3 = await CreateUserIfNotExistsAsync(
                 userManager,
                 "utente3@email.com",
                 "123456",
                 "Utente tre",
-                "3331112222");
+                "3331112222",false,
+                new DateTime(1992,10,10));
 
             // Creiamo alcuni interessi per ogni utente
             await CreateInterestIfNotExistsAsync(context, utente1.Id, "Calcio");
@@ -65,7 +70,9 @@ public static class DataSeeder
         string email,
         string password,
         string nomeCompleto,
-        string? phoneNumber)
+        string? phoneNumber,
+        bool NumeroInternazionale,
+        DateTime dataNascita)
     {
         // Controlliamo se l'utente esiste già tramite email
         ApplicationUser? existingUser = await userManager.FindByEmailAsync(email);
@@ -82,6 +89,8 @@ public static class DataSeeder
         user.NomeCompleto = nomeCompleto;
         user.PhoneNumber = phoneNumber;
         user.CreatedAt = DateTime.UtcNow;
+        user.NumeroInternazionale=NumeroInternazionale;
+        user.DataNascita=dataNascita;
 
         IdentityResult result = await userManager.CreateAsync(user, password);
 
