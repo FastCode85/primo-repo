@@ -20,9 +20,6 @@ public static class DataSeeder
             ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             UserManager<ApplicationUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            // Creiamo il database se non esiste ancora
-            //await context.Database.EnsureCreatedAsync();
-
             // Creiamo alcuni utenti demo
             ApplicationUser utente1 = await CreateUserIfNotExistsAsync(
                 userManager,
@@ -31,8 +28,8 @@ public static class DataSeeder
                 "Utente uno",
                 "3331234567",
                 false,
-                new DateTime(1990,10,10));
-
+                new DateTime(1990, 10, 10));
+            Console.WriteLine($"Utente creato: {utente1.Email}");
             ApplicationUser utente2 = await CreateUserIfNotExistsAsync(
                 userManager,
                 "utente2@email.com",
@@ -40,7 +37,7 @@ public static class DataSeeder
                 "Utente due",
                 "3337654321",
                 false,
-                new DateTime(1991,10,10));
+                new DateTime(1991, 10, 10));
 
             ApplicationUser utente3 = await CreateUserIfNotExistsAsync(
                 userManager,
@@ -48,8 +45,8 @@ public static class DataSeeder
                 "123456",
                 "Utente tre",
                 "3331112222",false,
-                new DateTime(1992,10,10));
-
+                new DateTime(1992, 10, 10));
+            Console.WriteLine($"Utente creato: {utente3.Email}");
             // Creiamo alcuni interessi per ogni utente
             await CreateInterestIfNotExistsAsync(context, utente1.Id, "Calcio");
             await CreateInterestIfNotExistsAsync(context, utente1.Id, "CSharp");
@@ -62,6 +59,8 @@ public static class DataSeeder
             await CreateInterestIfNotExistsAsync(context, utente3.Id, "Lettura");
             await CreateInterestIfNotExistsAsync(context, utente3.Id, "Viaggi");
             await CreateInterestIfNotExistsAsync(context, utente3.Id, "Fotografia");
+
+            Console.WriteLine("Seed completato");
         }
     }
 
@@ -72,7 +71,8 @@ public static class DataSeeder
         string nomeCompleto,
         string? phoneNumber,
         bool NumeroInternazionale,
-        DateTime dataNascita)
+        DateTime dataNascita
+        )
     {
         // Controlliamo se l'utente esiste già tramite email
         ApplicationUser? existingUser = await userManager.FindByEmailAsync(email);

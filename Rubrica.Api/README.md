@@ -415,6 +415,21 @@ la configurazione del DB con Entity Framework ed i JWT
 ## Migrazioni:
 
 - migrazioni per creare le tabelle Contatti e Users nel database usando Entity Framework Core
+Per come abbiamo impostato il program.cs quello che avviene è questo:
+- Pri a di avviare l'applicazione la prima volta, dobbiamo eseguire la migrazione iniziale per creare il database e le tabelle corrispondenti ai nostri modelli.
+Questo processo genera una migrazione che descrive le modifiche al database e poi applica quelle modifiche al database stesso.
+
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+
+Il database viene creato però senza dati dentro perché non viene ancora invocato il seeder, che viene eseguito nel program.cs quando avviamo l'applicazione.
+Quindi se vuoi vedere i dati di esempio, devi prima avviare l'applicazione con
+
+```bash
+dotnet run
+```
 
 ## Creazione progetto e comandi
 Creazione archetipo webapi

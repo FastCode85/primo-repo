@@ -98,11 +98,15 @@ app.MapControllers();
 using (var scope =app.Services.CreateScope())
 {
     var db=scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    Console.WriteLine("Applicazione migrazioni");
     await db.Database.MigrateAsync();
+    Console.WriteLine("migrazione completata");
 }
 
 // Richiama il seed iniziale con alcuni utenti demo e i loro interessi.
 // Se i dati esistono già, non vengono duplicati.
+Console.WriteLine("Avvio del seed");
 await DataSeeder.SeedAsync(app.Services);
+Console.WriteLine("Seed completato");
 
 app.Run();
